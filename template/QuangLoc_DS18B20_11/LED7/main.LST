@@ -1,0 +1,123 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 19:19:27 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include"temp.h"
+   3          
+   4          // Cac chan giao tiep voi man hinh LED 7 doan
+   5          #define DIG P0
+   6          
+   7          sbit LSA = P2^2;
+   8          sbit LSB = P2^3;
+   9          sbit LSC = P2^4;
+  10          
+  11          // Ma LED 7 doan tuong ung voi cac chu so tu 0 den 9
+  12          unsigned char code DIG_CODE[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};
+  13          unsigned char Num = 0;
+  14          unsigned int disp[8] = {0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f};
+  15          
+  16          // Khai bao cac ham
+  17          void LcdDisplay(int temp);
+  18          void Timer0Configuration(void);
+  19          void DigDisplay(void);
+  20          
+  21          // Ham hien thi nhiet do len LCD
+  22          void LcdDisplay(int temp)
+  23          {
+  24   1          unsigned char datas[] = {0, 0, 0, 0, 0}; // Mang luu tru gia tri nhiet do
+  25   1          float tp;
+  26   1          if(temp < 0) // Neu nhiet do la so am
+  27   1          {
+  28   2              disp[2] = 0x40; // Hien thi dau '-'
+  29   2              temp = temp - 1;
+  30   2              temp = ~temp;
+  31   2              tp = temp;
+  32   2              temp = tp * 0.0625 * 100 + 0.5;
+  33   2          }
+  34   1          else
+  35   1          {
+  36   2              disp[2] = 0; // Khong hien thi dau
+  37   2              tp = temp; 
+  38   2              temp = tp * 0.0625 * 100 + 0.5;
+  39   2          }
+  40   1      
+  41   1          // Chuyen doi gia tri nhiet do thanh ma hien thi tren LED 7 doan
+  42   1          disp[0] = 0;
+  43   1          disp[1] = 0;
+  44   1          disp[3] = DIG_CODE[temp / 10000];
+  45   1          disp[4] = DIG_CODE[temp % 10000 / 1000];
+  46   1          disp[5] = DIG_CODE[temp % 1000 / 100] | 0x80; // Them dau '.' vao gia tri
+  47   1          disp[6] = DIG_CODE[temp % 100 / 10];
+  48   1          disp[7] = DIG_CODE[temp % 10];
+  49   1      }
+  50          
+  51          // Cau hinh Timer 0
+  52          void Timer0Configuration(void)
+  53          {
+  54   1          TMOD = 0X02; // Chon che do Timer, che do 2
+  55   1      
+C51 COMPILER V9.60.0.0   MAIN                                                              12/11/2023 19:19:27 PAGE 2   
+
+  56   1          TH0 = 0X9C;  // Gia tri khoi tao cho Timer, 100us
+  57   1          TL0 = 0X9C;  
+  58   1          ET0 = 1;     // Bat ngat Timer 0
+  59   1          EA = 1;      // Bat ngat toan cuc
+  60   1          TR0 = 1;     // Khoi dong Timer 0
+  61   1      }
+  62          
+  63          // Ham ngat Timer 0 de hien thi tren man hinh LED 7 doan
+  64          void DigDisplay(void) interrupt 1{
+  65   1          DIG = 0; // Tat hien thi
+  66   1          switch(Num)  // Chon digit de hien thi
+  67   1          {
+  68   2              case(7):
+  69   2                  LSA = 0; LSB = 0; LSC = 0; break;
+  70   2              case(6):
+  71   2                  LSA = 1; LSB = 0; LSC = 0; break;
+  72   2              case(5):
+  73   2                  LSA = 0; LSB = 1; LSC = 0; break;
+  74   2              case(4):
+  75   2                  LSA = 1; LSB = 1; LSC = 0; break;
+  76   2              case(3):
+  77   2                  LSA = 0; LSB = 0; LSC = 1; break;
+  78   2              case(2):
+  79   2                  LSA = 1; LSB = 0; LSC = 1; break;
+  80   2              case(1):
+  81   2                  LSA = 0; LSB = 1; LSC = 1; break;
+  82   2              case(0):
+  83   2                  LSA = 1; LSB = 1; LSC = 1; break; 
+  84   2          }
+  85   1          DIG = disp[Num]; // Hien thi so tren LED 7 doan
+  86   1          Num++;
+  87   1          if(Num > 7)
+  88   1              Num = 0;
+  89   1      }
+  90          
+  91          void main()
+  92          {
+  93   1          Timer0Configuration();
+  94   1          while(1)
+  95   1          {
+  96   2              LcdDisplay(Ds18b20ReadTemp());
+  97   2          }
+  98   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    465    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

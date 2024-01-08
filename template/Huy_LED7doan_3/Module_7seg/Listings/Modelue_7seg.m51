@@ -1,0 +1,136 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/10/2023  13:04:23  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\module.obj TO .\Objects\Modelue_7seg PRINT (.\Listings\Modelue_7seg.m51) RAMSIZE (
+>> 256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\module.obj (MODULE)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\Modelue_7seg (MODULE)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     005AH     UNIT         ?PR?MAIN?MODULE
+            CODE    005DH     0054H     UNIT         ?PR?_CHONKEY?MODULE
+            CODE    00B1H     002CH     UNIT         ?PR?_MODULE8_DELAYMS?MODULE
+            CODE    00DDH     000CH     UNIT         ?C_C51STARTUP
+            CODE    00E9H     000AH     UNIT         ?CO?MODULE
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Modelue_7seg (MODULE)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MODULE
+
+?PR?MAIN?MODULE
+  +--> ?PR?_CHONKEY?MODULE
+  +--> ?CO?MODULE
+  +--> ?PR?_MODULE8_DELAYMS?MODULE
+
+?PR?_MODULE8_DELAYMS?MODULE
+  +--> ?PR?_CHONKEY?MODULE
+  +--> ?CO?MODULE
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Modelue_7seg (MODULE)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  13:04:23  PAGE 2
+
+
+  -------         MODULE        MODULE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  B:00A0H.2       PUBLIC        module8_LSA
+  B:00A0H.3       PUBLIC        module8_LSB
+  B:00A0H.4       PUBLIC        module8_LSC
+  C:0003H         PUBLIC        main
+  C:00E9H         PUBLIC        DIG_CODE
+  C:005DH         PUBLIC        _chonKey
+  C:00BDH         PUBLIC        _module8_delayMS
+  C:00B7H         SYMBOL        L?0030
+  -------         PROC          L?0029
+  -------         ENDPROC       L?0029
+  C:00B7H         SYMBOL        L?0030
+  -------         PROC          _MODULE8_DELAYMS
+  D:0006H         SYMBOL        t
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:00BDH         LINE#         15
+  C:00BDH         LINE#         17
+  C:00C7H         LINE#         18
+  C:00DCH         LINE#         19
+  -------         ENDPROC       _MODULE8_DELAYMS
+  -------         PROC          _CHONKEY
+  D:0006H         SYMBOL        k
+  C:005DH         LINE#         21
+  C:005DH         LINE#         22
+  C:0085H         LINE#         23
+  C:0085H         LINE#         24
+  C:0085H         LINE#         25
+  C:0089H         LINE#         26
+  C:0089H         LINE#         27
+  C:008DH         LINE#         28
+  C:008DH         LINE#         29
+  C:0091H         LINE#         30
+  C:0091H         LINE#         31
+  C:0095H         LINE#         32
+  C:0095H         LINE#         33
+  C:009CH         LINE#         34
+  C:009CH         LINE#         35
+  C:00A3H         LINE#         36
+  C:00A3H         LINE#         37
+  C:00AAH         LINE#         38
+  C:00AAH         LINE#         39
+  C:00B0H         LINE#         40
+  C:00B0H         LINE#         41
+  -------         ENDPROC       _CHONKEY
+  -------         PROC          MAIN
+  C:0003H         LINE#         42
+  C:0003H         LINE#         43
+  C:0003H         LINE#         44
+  C:0003H         LINE#         45
+  C:0003H         LINE#         46
+  C:000FH         LINE#         47
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/10/2023  13:04:23  PAGE 3
+
+
+  C:0014H         LINE#         48
+  C:0023H         LINE#         49
+  C:0030H         LINE#         50
+  C:003FH         LINE#         51
+  C:004AH         LINE#         52
+  C:0055H         LINE#         53
+  C:005AH         LINE#         54
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MODULE
+
+Program Size: data=9.0 xdata=0 code=243
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

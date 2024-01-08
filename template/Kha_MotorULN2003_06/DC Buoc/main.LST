@@ -1,0 +1,133 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 13:55:52 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          
+   3          #define GPIO_MOTOR P1
+   4          
+   5          sbit module9_K1=P3^0;
+   6          sbit module9_K2=P3^1;
+   7          sbit module9_K3=P3^2;
+   8          sbit module9_K4=P3^3;
+   9          
+  10          unsigned char code FFW[8]={0xf1,0xf3,0xf2,0xf6,0xf4,0xfc,0xf8,0xf9}; //·Xoay cung chieu kim dong ho theo h
+             -alf-step
+  11          unsigned char code FFZ[8]={0xf9,0xf8,0xfc,0xf4,0xf6,0xf2,0xf3,0xf1}; //Xoay nguoc chieu kim dong ho theo h
+             -alf-step
+  12          
+  13          unsigned char Direction;
+  14          unsigned char Speed;
+  15          
+  16          void Motor(void); 
+  17          void module9_Delay(unsigned int t);
+  18          
+  19          void  Motor(){ 
+  20   1        unsigned char i;
+  21   1        for(i=0;i<8;i++)
+  22   1        {
+  23   2          if(Direction==1) 
+  24   2            GPIO_MOTOR = FFW[i]&0x1f;  
+  25   2          if(Direction==2) 
+  26   2            GPIO_MOTOR = FFZ[i]&0x1f;
+  27   2          module9_Delay(Speed);   
+  28   2        }                   
+  29   1      }
+  30          
+  31          void module9_Delay(unsigned int t){                           
+  32   1        unsigned int k;
+  33   1        while(t--)
+  34   1        {
+  35   2          for(k=0; k<80; k++){ }
+  36   2        }
+  37   1      }
+  38          
+  39          void main(void) { 
+  40   1        unsigned char i;
+  41   1        Speed=30;
+  42   1        while(1)
+  43   1        {
+  44   2          if(module9_K1==0)   
+  45   2          {
+  46   3            module9_Delay(1); 
+  47   3            if(module9_K1==0)
+  48   3            {
+  49   4              Direction=1;
+  50   4            }
+  51   3            while((i<200)&&(module9_K1==0))  
+  52   3            {
+  53   4              module9_Delay(1);
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 13:55:52 PAGE 2   
+
+  54   4              i++;
+  55   4            }
+  56   3            i=0;
+  57   3          }
+  58   2          if(module9_K2==0)   
+  59   2          {
+  60   3            module9_Delay(1);
+  61   3            if(module9_K2==0)
+  62   3            {
+  63   4              Direction=2;
+  64   4            }
+  65   3            while((i<200)&&(module9_K2==0))  
+  66   3            {
+  67   4              module9_Delay(1);
+  68   4              i++;
+  69   4            }
+  70   3            i=0;
+  71   3          }     
+  72   2          if(module9_K3==0)   
+  73   2          {
+  74   3            module9_Delay(1); 
+  75   3            if(module9_K3==0)
+  76   3            {
+  77   4              Speed=13;
+  78   4            }
+  79   3            while((i<200)&&(module9_K3==0)) 
+  80   3            {
+  81   4              module9_Delay(1);
+  82   4              i++;
+  83   4            }
+  84   3            i=0;
+  85   3          }
+  86   2          if(module9_K4==0)   
+  87   2          {
+  88   3            module9_Delay(1); 
+  89   3            if(module9_K4==0)
+  90   3            {
+  91   4              Speed=40;
+  92   4            }
+  93   3            while((i<200)&&(module9_K4==0)) 
+  94   3            {
+  95   4              module9_Delay(1);
+  96   4              i++;
+  97   4            }
+  98   3            i=0;
+  99   3          }   
+ 100   2          Motor();
+ 101   2        }
+ 102   1      }
+ 103          
+ 104          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    248    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.0.0   MAIN                                                              12/10/2023 13:55:52 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

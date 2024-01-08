@@ -1,0 +1,81 @@
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/12/2023 00:08:58 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MODULE_1
+OBJECT MODULE PLACED IN .\Objects\module_1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE module_1.c WARNINGLEVEL(1) OPTIMIZE(8,SIZE) BROWSE DEBUG OBJECTEXTEND PR
+                    -INT(.\Listings\module_1.lst) TABS(2) OBJECT(.\Objects\module_1.obj)
+
+line level    source
+
+   1          #include "module_1.h"
+   2          
+   3          void Time1Config(void){
+   4   1        TMOD|= 0x10;
+   5   1        TH1 = 0xFF;
+   6   1        TL1 = 0xff;
+   7   1        ET1 = 1;
+   8   1        EA = 1;
+   9   1        TR1 = 1;
+  10   1      }
+  11          
+  12          void Time1(void) interrupt 3{
+  13   1          TH1 = 0xFF;
+  14   1          TL1 = 0xFf;
+  15   1          module1_timer1++;
+  16   1          module1_count++;
+  17   1      }
+  18          
+  19          void module_1(void){
+  20   1        Time1Config();
+  21   1        if(module1_count > 100)
+  22   1        {
+  23   2          module1_count = 0;
+  24   2          if(DIR == 1)
+  25   2          {
+  26   3            value++;
+  27   3          }
+  28   2          if(DIR == 0)
+  29   2          {
+  30   3            value--;
+  31   3          }
+  32   2        }
+  33   1      
+  34   1        if(value == 1000)
+  35   1        {
+  36   2          DIR = 0;
+  37   2        }
+  38   1        if(value == 0)
+  39   1        {
+  40   2          DIR = 1;
+  41   2        }
+  42   1        
+  43   1        if(module1_timer1 > 1000)
+  44   1        {
+  45   2          module1_timer1 = 0;
+  46   2        }
+  47   1        if(module1_timer1 < value)
+  48   1        {
+  49   2          module1_PWM = 1;
+  50   2        }
+  51   1        else
+  52   1        {
+  53   2          module1_PWM = 0;
+  54   2        }
+C51 COMPILER V9.60.0.0   MODULE_1                                                          12/12/2023 00:08:58 PAGE 2   
+
+  55   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    137    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
